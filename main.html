@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Mantra RD Service Client</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      .navbar-right h2 {
+        color: #fff;
+        margin: 20px 20px;
+      }
+
+      .mtop {
+        margin: 20px 0 0;
+      }
+
+      .box-shadow {
+        box-shadow: 0 2px 5px rgba(105, 108, 109, 0.7),
+          0 0 8px 5px rgba(208, 223, 226, 0.4) /*inset*/;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      .overlay {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.9);
+        overflow-x: hidden;
+        transition: 0.5s;
+      }
+
+      .overlay-content {
+        position: relative;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .overlay a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 36px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .overlay a:hover,
+      .overlay a:focus {
+        color: #f1f1f1;
+      }
+
+      .overlay .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+      }
+
+      @media (max-width: 1200px) {
+        .btn-200 {
+          width: 150px !important;
+          margin-bottom: 10px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .btn-200 {
+          width: 100% !important;
+          margin-bottom: 10px;
+        }
+      }
+
+      @media screen and (max-height: 450px) {
+        .overlay a {
+          font-size: 20px;
+        }
+
+        .overlay .closebtn {
+          font-size: 40px;
+          top: 15px;
+          right: 35px;
+        }
+      }
+
+      .btn-50 {
+        width: 50px;
+      }
+
+      .btn-100 {
+        width: 100px;
+      }
+
+      .btn-150 {
+        width: 150px;
+      }
+
+      .btn-200 {
+        width: 205px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .btn-primary {
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+      }
+
+      .btn-primary:hover {
+        color: #fff;
+        background-color: #357ebd;
+        border-color: #428bca;
+      }
+
+      .img {
+        min-width: 125px;
+        min-height: 155px;
+        width: 125px;
+        height: 155px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+        background-color: #ffffff;
+      }
+    </style>
+    <!-- <script type="text/javascript" src="resources/respond.js"></script> -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"
+      integrity="sha512-i/6nAYMMwXZ3dTsq+ngdkSl4MbtVQF0FdCeqP5/1HSXPxyEd43vrxhafg1P4iqKRAnZVHn48GYaFUYRcTB0YrQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"
+      integrity="sha512-UDJtJXfzfsiPPgnI5S1000FPLBHMhvzAMX15I+qG2E2OAzC9P1JzUwJOfnypXiOH7MRPaqzhPbBGDNNj7zBfoA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- <script type="text/javascript" src="resources/html5shiv.js"></script> -->
+    <!-- <script type="text/javascript" src="resources/jquery-1.12.4.js"></script> -->
+  </head>
+
+  <body style="padding: 10px 0;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default box-shadow">
+            <div class="panel-heading">Select Option to Capture</div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label>Device</label>
+                    <select id="device" class="form-control">
+                      <option value="Mantra L0">Mantra L0</option>
+                      <option value="Mantra L1">Mantra L1</option>
+                      <option value="Morpho L0">Morpho L0</option>
+                      <option value="Morpho L1">Morpho L1</option>
+                      <option value="Startek L0">Startek L0</option>
+                      <option value="Startek L1">Startek L1</option>
+                      <option value="Aratek">Aratek</option>
+                      <option value="Next L1">Next L1</option>
+                      <option value="Precision L1">Precision L1</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 mtop">
+                  <div>
+                    <div class="form-group">
+                      <button
+                        type="button"
+                        value="Capture"
+                        class="btn btn-200 btn-primary"
+                        onclick="captureDevice()"
+                      >
+                        Capture
+                      </button>
+                      <button
+                        type="button"
+                        value="Capture"
+                        class="btn btn-200 btn-primary"
+                        onclick="reset()"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="panel panel-default box-shadow">
+                <div class="panel-heading">Device Info</div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <textarea
+                      rows="10"
+                      id="txtDeviceInfo"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+
+                  <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+              </div>
+              <!-- /.panel -->
+            </div>
+            <div class="col-lg-4">
+              <div class="panel panel-default box-shadow">
+                <div class="panel-heading">Pid Options</div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <textarea
+                      id="txtPidOptions"
+                      rows="10"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+
+                  <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+              </div>
+              <!-- /.panel -->
+            </div>
+            <div class="col-lg-12">
+              <div class="panel panel-default box-shadow">
+                <div class="panel-heading">Pid Data</div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <textarea
+                      id="txtPidData"
+                      rows="15"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+
+                  <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+              </div>
+              <!-- /.panel -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const xmlhttp = new XMLHttpRequest();
+      const fType = 2;
+      const MANTRA_PARAMS = `<PidOptions ver="1.0"><Opts fCount="1" fType="2" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="10000" posh="UNKNOWN" env="P" /><CustOpts><Param name="mantrakey" value="undefined" /></CustOpts></PidOptions>`;
+      const MORPHO_PARAMS = `<PidOptions ver='1.0'> <Opts fCount='1' fType='2' iCount='0' iType='0' indicatorforUID='0' pCount='0' pType='0' format='0' pidVer='2.0' env='P' timeout='10000' otp='' wadh='' posh='UNKNOWN'/><Demo></Demo><CustOpts> <Param name='' value='' /></CustOpts></PidOptions>`;
+      const ARATEK_PARAMS = `<PidOptions ver="1.0"><Opts env="P" fCount="1" fType="2" format="0" pidVer="2.0" wadh="" /><Demo></Demo><CustOpts></CustOpts><Bios></Bios></PidOptions>`;
+      const STARTEK_PARAMS = `<PidOptions ver="1.0"><Opts fCount="1" fType="2" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="20000" otp="" posh="UNKNOWN" env="P" wadh="" /><Demo></Demo><CustOpts><Param name="ValidationKey" value="" /></CustOpts></PidOptions>`;
+      const MORPHO_L1_PARAMS = `<PidOptions ver="1.0"><Opts env="P" fCount="1" fType="2" iCount="" iType="" pCount="" pType="" format="0" pidVer="2.0" timeout="10000" otp="" wadh="" posh=""/></PidOptions>`;
+      const PRECISION_PARAMS = `<PidOptions ver="1.0"><Opts env="P" fCount="1" fType="2" iCount="" iType="" pCount="" pType="" format="0" pidVer="2.0" timeout="20000" otp="" wadh="" posh=""/><Demo></Demo><CustOpts></CustOpts></PidOptions>`;
+      const NEXT_PARAMS = `<PidOptions ver="1.0"><Opts env="P" fCount="1" fType="2" iCount="" iType="" pCount="" pType="" format="0" pidVer="2.0" timeout="20000" otp="" wadh="" posh=""/><Demo></Demo><CustOpts></CustOpts></PidOptions>`;
+
+      function captureDevice() {
+        let port;
+        const activeDevice = $("#device").val()?.toLowerCase();
+        if (activeDevice.length > 0) {
+          switch (activeDevice) {
+            case "mantra l0":
+              port = localStorage.getItem("MANTRA_PORT");
+              port == null || port == ""
+                ? readRdService("mantra l0")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    MANTRA_PARAMS,
+                    "MANTRA"
+                  );
+              break;
+
+            case "morpho l0":
+              port = localStorage.getItem("MORPHO_PORT");
+              port == null || port == ""
+                ? readRdService("morpho l0")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/capture`,
+                    `http://127.0.0.1:${port}/getDeviceInfo`,
+                    MORPHO_PARAMS,
+                    "Morpho"
+                  );
+              break;
+
+            case "startek l0":
+              port = localStorage.getItem("STARTEK_PORT");
+              port == null || port == ""
+                ? readRdService("startek l0")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    STARTEK_PARAMS,
+                    "STARTEK"
+                  );
+              break;
+
+            case "aratek l0":
+              port = localStorage.getItem("ARATEK_PORT");
+              port == null || port == ""
+                ? readRdService("aratek l0")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    ARATEK_PARAMS,
+                    "INTEGRA"
+                  );
+              break;
+
+            case "mantra l1":
+              port = localStorage.getItem("MANTRA_L1_PORT");
+              port == null || port == ""
+                ? readRdService("mantra l1")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    MANTRA_PARAMS,
+                    "MANTRA.MSIPL"
+                  );
+              break;
+
+            case "morpho l1":
+              port = localStorage.getItem("MORPHO_L1_PORT");
+              port == null || port == ""
+                ? readRdService("morpho l1")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    MORPHO_L1_PARAMS,
+                    "Morpho.SmartChip"
+                  );
+              break;
+
+            case "startek l1":
+              port = localStorage.getItem("STARTEK_L1_PORT");
+              port == null || port == ""
+                ? readRdService("startek l1")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    STARTEK_PARAMS,
+                    "STARTEK.ACPL"
+                  );
+              break;
+
+            case "next l1":
+              port = localStorage.getItem("NEXT_L1_PORT");
+              port == null || port == ""
+                ? readRdService("next l1")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    NEXT_PARAMS,
+                    "STARTEK.ACPL"
+                  );
+              break;
+
+            case "precision l1":
+              port = localStorage.getItem("PRECISION_L1_PORT");
+              port == null || port == ""
+                ? readRdService("precision l1")
+                : readDeviceInfo(
+                    `http://127.0.0.1:${port}/rd/capture`,
+                    `http://127.0.0.1:${port}/rd/info`,
+                    PRECISION_PARAMS,
+                    "PRECISION.PB"
+                  );
+              break;
+          }
+        } else {
+          alert("Please Select Device Type");
+        }
+      }
+
+      function readRdService(device) {
+        let portfound = false;
+        let port = 11100;
+        let i;
+
+        setTimeout(() => {
+          for (i = port; i <= 11120; i++) {
+            $.ajax({
+              url: "http://127.0.0.1:" + i,
+              type: "RDSERVICE",
+              async: false,
+              contentType: "text/xml; charset=utf-8",
+              processData: false,
+              cache: false,
+              crossDomain: true,
+            }).done((data) => {
+              console.log({ data });
+              if (data) {
+                const xmlDoc =
+                  $.parseXML(data) == null ? data : $.parseXML(data);
+                const info = $(xmlDoc).find("RDService").attr("info");
+                const status = $(xmlDoc).find("RDService").attr("status");
+                console.log({ device, info, status });
+                switch (device) {
+                  case "mantra l0":
+                    if (info) {
+                      if (
+                        info
+                          ?.toLowerCase()
+                          .indexOf(
+                            "mantra authentication vendor device manager"
+                          ) != -1
+                      ) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "morpho l0":
+                    if (info) {
+                      if (info?.toLowerCase().indexOf("morpho") != -1) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "aratek l0":
+                    if (info) {
+                      if (info?.indexOf("Integra") != -1) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "startek l0":
+                    if (info) {
+                      if (info?.toLowerCase().indexOf("startek") != -1) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "mantra l1":
+                    if (info) {
+                      if (
+                        info.indexOf(
+                          "Mantra MFS110 Authentication Vendor Device Manager"
+                        ) != -1
+                      ) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "morpho l1":
+                    if (info) {
+                      if (info.indexOf("IDEMIA_L1_RDSERVICE") != -1) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "startek l1":
+                    if (info) {
+                      if (
+                        info.indexOf(
+                          "RD service for L1 provided by Access Computech"
+                        ) != -1
+                      ) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "next l1":
+                    if (info) {
+                      if (
+                        info.indexOf(
+                          "RD service for L1 provided by Access Computech"
+                        ) != -1
+                      ) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+
+                  case "precision l1":
+                    if (info) {
+                      if (info.indexOf("Precision - L1 Biometric") != -1) {
+                        if (status === "READY") {
+                          portfound = true;
+                        }
+                      }
+                    }
+                    break;
+                }
+              }
+            });
+
+            if (portfound) {
+              const uri = `http://127.0.0.1:${i}`;
+              switch (device) {
+                case "mantra l0":
+                  localStorage.setItem("MANTRA_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    MANTRA_PARAMS,
+                    "MANTRA"
+                  );
+                  break;
+
+                case "morpho l0":
+                  localStorage.setItem("MORPHO_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/capture`,
+                    `${uri}/getDeviceInfo`,
+                    MORPHO_PARAMS,
+                    "Morpho"
+                  );
+                  break;
+
+                case "aratek l0":
+                  localStorage.setItem("ARATEK_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    ARATEK_PARAMS,
+                    "INTEGRA"
+                  );
+                  break;
+
+                case "startek l0":
+                  localStorage.setItem("STARTEK_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    STARTEK_PARAMS,
+                    "STARTEK"
+                  );
+                  break;
+
+                case "mantra l1":
+                  localStorage.setItem("MANTRA_L1_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    MANTRA_PARAMS,
+                    "MANTRA.MSIPL"
+                  );
+                  break;
+
+                case "morpho l1":
+                  localStorage.setItem("MORPHO_L1_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    MORPHO_L1_PARAMS,
+                    "Morpho.SmartChip"
+                  );
+                  break;
+
+                case "startek l1":
+                  localStorage.setItem("STARTEK_L1_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    STARTEK_PARAMS,
+                    "STARTEK.ACPL"
+                  );
+                  break;
+
+                case "next l1":
+                  localStorage.setItem("NEXT_L1_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    NEXT_PARAMS,
+                    "STARTEK.ACPL"
+                  );
+                  break;
+
+                case "precision l1":
+                  localStorage.setItem("PRECISION_L1_PORT", i);
+                  readDeviceInfo(
+                    `${uri}/rd/capture`,
+                    `${uri}/rd/info`,
+                    PRECISION_PARAMS,
+                    "PRECISION.PB"
+                  );
+                  break;
+              }
+              break;
+            }
+          }
+
+          if (i === 11121) {
+            alert("Could not connect to Rd Service");
+          }
+        }, 100);
+      }
+
+      function readDeviceInfo(captureUrl, infoUrl, params, deviceId) {
+        const xhr = new XMLHttpRequest();
+        const activeDevice = $("#device").val()?.toLowerCase();
+        xhr.open("DEVICEINFO", infoUrl, true);
+
+        xhr.onload = () => {
+          const status = xhr.status;
+
+          if (status == 200) {
+            if (xhr.responseText != undefined && xhr.responseText != "") {
+              const xmlDoc = $.parseXML(xhr.responseText);
+              const device = $(xmlDoc).find("DeviceInfo").attr("dpId");
+
+              $("#txtDeviceInfo").val(xhr.responseText);
+              if (device) {
+                if (device.indexOf(deviceId) != -1) {
+                  captureFingerprint(captureUrl, params);
+                } else {
+                  readRdService(activeDevice);
+                }
+              } else {
+                readRdService(activeDevice);
+              }
+            }
+          } else {
+            readRdService(activeDevice);
+          }
+        };
+
+        xhr.onerror = () => readRdService(activeDevice);
+
+        xhr.ontimeout = () => {
+          alert("Server Timeout");
+        };
+        xhr.send();
+      }
+
+      function captureFingerprint(captureUrl, params) {
+        let errcode = null;
+        let errinfo = null;
+
+        xmlhttp.open("CAPTURE", captureUrl, true);
+        xmlhttp.onreadystatechange = () => {
+          let xmlDoc;
+          const status = xmlhttp.status;
+
+          if (status == 200) {
+            if (
+              xmlhttp.responseText != undefined &&
+              xmlhttp.responseText != ""
+            ) {
+              xmlDoc = $.parseXML(xmlhttp.responseText);
+
+              errcode = $(xmlDoc).find("Resp").attr("errCode");
+              errinfo = $(xmlDoc).find("Resp").attr("errInfo");
+
+              if (errcode == "0") {
+                $("#txtPidData").val(xmlhttp.responseText);
+                $("#txtPidOptions").val(params);
+                alert(errinfo);
+              } else {
+                alert("Error Code: " + errcode + " Error Info: " + errinfo);
+              }
+            }
+          } else {
+            if (status != 0) {
+              const comm_err = alert("Server Error: " + status);
+            }
+          }
+        };
+
+        xmlhttp.onerror = () => {
+          alert("Could Not Connect To Rd Service");
+        };
+
+        xmlhttp.ontimeout = () => {
+          alert("Server Timeout");
+        };
+
+        xmlhttp.onabort = () => {
+          alert("Process Aborted");
+        };
+
+        xmlhttp.send(params);
+      }
+
+      function reset() {
+        $("#txtPidData").val("");
+        $("#txtPidOptions").val("");
+        $("#txtDeviceInfo").val("");
+        $("select#device").prop("selectedIndex", 0);
+      }
+    </script>
+  </body>
+</html>
